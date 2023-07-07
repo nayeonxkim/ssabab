@@ -9,6 +9,7 @@ webdriver_service = Service('path/to/chromedriver')
 
 # Chrome 웹드라이버 옵션 설정
 options = Options()
+options.add_experimental_option("mobileEmulation", { "deviceName": "iPhone X" })   # 모바일 화면 설정
 # options.add_argument('--headless')  # 브라우저 창을 띄우지 않고 실행
 
 # Chrome 웹드라이버 객체 생성
