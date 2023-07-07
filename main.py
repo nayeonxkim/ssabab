@@ -44,7 +44,7 @@ password_input.send_keys(password)
 time.sleep(3)
 
 # 로그인 버튼 클릭
-login_button = driver.find_element('button')
+login_button = driver.find_element(By.CSS_SELECTOR, "#contents > div > form > div.btn-wrap > button")
 login_button.click()
 
 # 로그인이 완료될 때까지 대기
