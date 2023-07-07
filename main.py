@@ -64,8 +64,9 @@ def login_by_cookie():
 # login_by_username()
 login_by_cookie()
 
+menuDt = '230708'
 # 크롤링할 웹페이지의 URL
-target_url = "https://welplus.welstory.com/#/meal/detail?menuDt=20230707&hallNo=E32M&menuCourseType=AA&menuMealType=2&restaurantCode=REST000595"
+target_url = f"https://welplus.welstory.com/#/meal/detail?menuDt={menuDt}&hallNo=E32M&menuCourseType=AA&menuMealType=2&restaurantCode=REST000595"
 
 
 # 크롤링할 페이지로 이동
@@ -73,7 +74,7 @@ driver.get(target_url)
 time.sleep(1)
 
 # 웹 화면 캡처
-driver.save_screenshot('./cap1.png')
+driver.save_screenshot('./todayMenu.png')
 
 # 웹드라이버 종료
 driver.quit()
