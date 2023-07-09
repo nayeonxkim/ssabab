@@ -27,8 +27,8 @@ def login_by_username():
     login_url = "https://welplus.welstory.com/#/login/username"
 
     # 로그인 정보
-    username = ""
-    password = ""
+    username = "kny0628m"
+    password = "kny0916!!"
 
     # 로그인 페이지로 이동
     driver.get(login_url)
@@ -109,7 +109,7 @@ def merge_SS_in_a_row(SS_arr):
 
 def capture_a_menu(menuCourseType):
     # 크롤링할 웹페이지의 URL
-    target_url = f"https://welplus.welstory.com/#/meal/detail?menuDt={menuDt}&hallNo=E32M&menuCourseType={menuCourseType}&menuMealType=2&restaurantCode=REST000595"
+    target_url = f"https://welplus.welstory.com/#/meal/detail?menuDt=230707&hallNo=E32M&menuCourseType={menuCourseType}&menuMealType=2&restaurantCode=REST000595"
 
     # params만 바뀌는 경우
     # 페이지가 변경되지 않기 떄문에
@@ -157,7 +157,7 @@ def webhook(SS):
         }]
     })
 
-    requests.post('incoming_webhook_url', headers=headers, data=data)
+    requests.post('https://meeting.ssafy.com/hooks/888atgkpqfg97cxoy37m3tanhh', headers=headers, data=data)
 
 webhook(capture_all_menu())
 
