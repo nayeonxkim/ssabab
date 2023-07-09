@@ -1,5 +1,8 @@
 import time
 import io
+import json
+import base64
+import requests
 from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -7,13 +10,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from PIL import Image
 
+
 # Chrome 웹드라이버 경로 설정
 webdriver_service = Service('path/to/chromedriver')
 
 # Chrome 웹드라이버 옵션 설정
 options = Options()
 options.add_experimental_option("mobileEmulation", { "deviceName": "iPhone X" })   # 모바일 화면 설정
-# options.add_argument('--headless')  # 브라우저 창을 띄우지 않고 실행
+options.add_argument('--headless')  # 브라우저 창을 띄우지 않고 실행
 
 # Chrome 웹드라이버 객체 생성
 driver = webdriver.Chrome(service=webdriver_service, options=options)
@@ -64,8 +68,8 @@ def login_by_cookie():
     # 쿠키 설정
     driver.add_cookie(cookie)      
 
-# login_by_username()
-login_by_cookie()
+login_by_username()
+# login_by_cookie()
 
 # menuDt = '20230708'
 menuDt = datetime.now().strftime("%Y%m%d")
@@ -138,9 +142,24 @@ def capture_all_menu():
     for menuCourseType in menuCourseTypes:
         SS_arr.append(capture_a_menu(menuCourseType))
     
-    merge_SS_in_a_row(SS_arr).save("todayMenu.png","PNG")
+    # merge_SS_in_a_row(SS_arr).save("todayMenu.png","PNG")
+    return merge_SS_in_a_row(SS_arr)
 
-capture_all_menu()
+def webhook(SS):
+    buffer = io.BytesIO()
+    SS.save(buffer, format='JPEG')
+    img_url = 'data:image/jpeg;base64,'+ base64.b64encode(buffer.getvalue()).decode("utf-8")
+    
+    headers = {'Content-Type': 'application/json',}
+    data = json.dumps({
+        "attachments": [{
+            "image_url": img_url
+        }]
+    })
+
+    requests.post('incoming_webhook_url', headers=headers, data=data)
+
+webhook(capture_all_menu())
 
 # 웹드라이버 종료
 driver.quit()
