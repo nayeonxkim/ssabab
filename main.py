@@ -28,7 +28,7 @@ def login_by_username():
 
     # 로그인 정보
     username = "kny0628m"
-    password = "kny0916!!"
+    password = ""
 
     # 로그인 페이지로 이동
     driver.get(login_url)
