@@ -120,8 +120,8 @@ class SSABOB():
 
     def initialize_webdriver(self):
         # Chrome 웹드라이버 경로 설정
-        # webdriver_service = Service('path/to/chromedriver')
-        webdriver_service = Service('/opt/chrome/chromedriver')
+        webdriver_service = Service('path/to/chromedriver')
+        # webdriver_service = Service('/opt/chrome/chromedriver')
 
         # Chrome 웹드라이버 옵션 설정
         options = Options()
@@ -256,11 +256,12 @@ if __name__ == '__main__':
     screenshot.save('todayMenu.png')
 
     s3 = s3_connection()
+    today = datetime.now(timezone('Asia/Seoul')).strftime("%Y%m%d")
     try:
-        s3.upload_file("todayMenu.png", os.environ.get('aws_bucket'),"todayMenu.png")
+        s3.upload_file("todayMenu.png", os.environ.get('aws_bucket'),f"{today}.png")
     except Exception as e:
         print(e)
 
     # img_url = image2base64(screenshot)
-    img_url = os.environ.get('aws_img_url')
+    img_url = os.environ.get('aws_img_url')+f"{today}.png"
     app.handle_incoming_webhook(img_url)
