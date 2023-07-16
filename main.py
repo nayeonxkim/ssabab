@@ -256,12 +256,11 @@ if __name__ == '__main__':
     screenshot.save('todayMenu.png')
 
     s3 = s3_connection()
-    today = datetime.now(timezone('Asia/Seoul')).strftime("%Y%m%d")
     try:
-        s3.upload_file("todayMenu.png", os.environ.get('aws_bucket'),f"{today}.png")
+        s3.upload_file("todayMenu.png", os.environ.get('aws_bucket'),"todayMenu.png")
     except Exception as e:
         print(e)
 
     # img_url = image2base64(screenshot)
-    img_url = os.environ.get('aws_img_url')+f"{today}.png"
+    img_url = os.environ.get('aws_img_url')
     app.handle_incoming_webhook(img_url)
